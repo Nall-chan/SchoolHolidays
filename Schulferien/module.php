@@ -1,8 +1,29 @@
 <?
 
+/**
+ * @addtogroup schulferien
+ * @{
+ *
+ * @package       Schulferien
+ * @file          module.php
+ * @author        Michael Tröger <micha@nall-chan.net>
+ * @copyright     2016 Michael Tröger
+ * @license       https://creativecommons.org/licenses/by-nc-sa/4.0/ CC BY-NC-SA 4.0
+ * @version       1.01
+ */
+
+/**
+ * Schulferien ist die Klasse für das IPS-Modul 'Schulferien'.
+ * Erweitert IPSModule 
+ */
 class Schulferien extends IPSModule
 {
 
+    /**
+     * Interne Funktion des SDK.
+     *
+     * @access public
+     */
     public function Create()
     {
         parent::Create();
@@ -10,6 +31,11 @@ class Schulferien extends IPSModule
         $this->RegisterPropertyString("BaseURL", "http://www.schulferien.org/media/ical/deutschland/ferien_");
     }
 
+    /**
+     * Interne Funktion des SDK.
+     *
+     * @access public
+     */
     public function ApplyChanges()
     {
         parent::ApplyChanges();
@@ -17,47 +43,19 @@ class Schulferien extends IPSModule
         $this->RegisterVariableBoolean("IsSchoolHoliday", "Sind Ferien ?");
         $this->RegisterVariableString("SchoolHoliday", "Ferien");
         // 15 Minuten Timer
-        $this->RegisterTimer("UpdateSchoolHolidays", 15 * 60 *1000, 'SCHOOL_Update($_IPS[\'TARGET\']);');
+        $this->RegisterTimer("UpdateSchoolHolidays", 15 * 60 * 1000, 'SCHOOL_Update($_IPS[\'TARGET\']);');
         // Nach übernahme der Einstellungen oder IPS-Neustart einmal Update durchführen.
         $this->Update();
     }
 
-    private function GetFeiertag()
-    {
-        $jahr = date("Y") - 1;
-        $link = $this->ReadPropertyString("BaseURL") . strtolower($this->ReadPropertyString("Area")) . "_" . $jahr . ".ics";
-        $meldung = @file($link);
-        if ($meldung === false)
-            throw new Exception("Cannot load iCal Data.", E_USER_NOTICE);
+    ################## PUBLIC    
 
-        $jahr = date("Y");
-        $link = $this->ReadPropertyString("BaseURL") . strtolower($this->ReadPropertyString("Area")) . "_" . $jahr . ".ics";
-        $meldung2 = @file($link);
-        if ($meldung2 === false)
-            throw new Exception("Cannot load iCal Data.", E_USER_NOTICE);
-
-        $meldung = array_merge($meldung, $meldung2);
-        $ferien = "Keine Ferien";
-
-        $anzahl = (count($meldung) - 1);
-
-        for ($count = 0; $count < $anzahl; $count++)
-        {
-            if (strstr($meldung[$count], "SUMMARY:"))
-            {
-                $name = trim(substr($meldung[$count], 8));
-                $start = trim(substr($meldung[$count + 1], 19));
-                $ende = trim(substr($meldung[$count + 2], 17));
-                $jetzt = date("Ymd") . "\n";
-                if (($jetzt >= $start) and ( $jetzt <= $ende))
-                {
-                    $ferien = explode(' ', $name)[0];
-                }
-            }
-        }
-        return $ferien;
-    }
-
+    /**
+     * IPS-Instanz-Funktion 'SCHOOL_Update'.
+     * Liest den Ferienkalender und befüllt die Variablen.
+     * 
+     * @return boolean True bei erfolg, sonst false.
+     */
     public function Update()
     {
         try
@@ -67,6 +65,7 @@ class Schulferien extends IPSModule
         catch (Exception $exc)
         {
             trigger_error($exc->getMessage(), $exc->getCode());
+            $this->SendDebug('ERROR', $exc->getMessage(), 0);
             return false;
         }
 
@@ -83,18 +82,83 @@ class Schulferien extends IPSModule
         return true;
     }
 
-    private function SetValueBoolean($Ident, $value)
+    ################## private
+
+    /**
+     * Holt den aktuellen Kalender von http://www.schulferien.org und wertet Diesen aus.
+     *
+     * @access private
+     * @return string Liefert den Namen der aktuellen Ferien oder 'Keine Ferien'.
+     * @throws Exception Wenn Kalender nicht geladen werden konnte.
+     */
+    private function GetFeiertag()
     {
-        $id = $this->GetIDForIdent($Ident);
-            SetValueBoolean($id, $value);
+        $jahr = date("Y") - 1;
+        $link = $this->ReadPropertyString("BaseURL") . strtolower($this->ReadPropertyString("Area")) . "_" . $jahr . ".ics";
+        $this->SendDebug('GET', $link, 0);
+        $meldung = @file($link);
+        if ($meldung === false)
+            throw new Exception("Cannot load iCal Data.", E_USER_NOTICE);
+        $this->SendDebug('LINES', count($meldung), 0);
+
+        $jahr = date("Y");
+        $link = $this->ReadPropertyString("BaseURL") . strtolower($this->ReadPropertyString("Area")) . "_" . $jahr . ".ics";
+        $this->SendDebug('GET', $link, 0);
+        $meldung2 = @file($link);
+        if ($meldung2 === false)
+            throw new Exception("Cannot load iCal Data.", E_USER_NOTICE);
+        $this->SendDebug('LINES', count($meldung2), 0);
+
+        $meldung = array_merge($meldung, $meldung2);
+        $ferien = "Keine Ferien";
+
+        $anzahl = (count($meldung) - 1);
+
+        for ($count = 0; $count < $anzahl; $count++)
+        {
+            if (strstr($meldung[$count], "SUMMARY:"))
+            {
+                $name = trim(substr($meldung[$count], 8));
+                $start = trim(substr($meldung[$count + 1], 19));
+                $ende = trim(substr($meldung[$count + 2], 17));
+                $this->SendDebug('SUMMARY', $name, 0);
+                $this->SendDebug('START', $start, 0);
+                $this->SendDebug('END', $ende, 0);
+                $jetzt = date("Ymd") . "\n";
+                if (($jetzt >= $start) and ( $jetzt <= $ende))
+                {
+                    $ferien = explode(' ', $name)[0];
+                    $this->SendDebug('FOUND', $ferien, 0);
+                }
+            }
+        }
+        return $ferien;
     }
 
-    private function SetValueString($Ident, $value)
+    /**
+     * Setzt eine Boolean-Variable
+     * 
+     * @param string $Ident Der Ident der Boolean-Variable
+     * @param bool $value Der neue Wert der Boolean-Variable
+     */
+    private function SetValueBoolean(string $Ident, bool $value)
     {
         $id = $this->GetIDForIdent($Ident);
-            SetValueString($id, $value);
+        SetValueBoolean($id, $value);
+    }
+
+    /**
+     * Setzt eine String-Variable
+     * 
+     * @param string $Ident Der Ident der String-Variable
+     * @param string $value Der neue Wert der String-Variable
+     */
+    private function SetValueString(string $Ident, string $value)
+    {
+        $id = $this->GetIDForIdent($Ident);
+        SetValueString($id, $value);
     }
 
 }
 
-?>
+/** @} */

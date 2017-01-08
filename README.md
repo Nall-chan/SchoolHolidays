@@ -14,6 +14,7 @@ Es handelt sich hier um eine Umsetzung von dem Schulferien-Script von kronos aus
 3. [Installation](#3-installation)
 4. [Funktionsreferenz](#4-funktionsreferenz) 
 5. [Anhang](#5-anhang)
+6. [Lizenz](#6-lizenz)
 
 ## 1. Funktionsumfang
 
@@ -26,14 +27,16 @@ Es handelt sich hier um eine Umsetzung von dem Schulferien-Script von kronos aus
  
 ## 3. Installation
 
-   - IPS 3.x  
-        Kein Modul, aber das Original-Script aus dem Forum kann genutzt werden.
-        [IP-Symcon Forum: Schulferien](https://www.symcon.de/forum/threads/20398-Schulferien)
+### IPS 3.x  
+   Kein Modul, aber das Original-Script aus dem Forum kann genutzt werden.
+    [IP-Symcon Forum: Schulferien](https://www.symcon.de/forum/threads/20398-Schulferien)
 
-   - IPS 4.x  
-        Über das 'Modul Control' folgende URL hinzufügen:  
-        `git://github.com/Nall-chan/IPSSchoolHolidays.git`  
+### IPS 4.x  
+   Über das 'Modul Control' folgende URL hinzufügen:  
+    `git://github.com/Nall-chan/IPSSchoolHolidays.git`  
 
+   Unter Instanz hinzufügen ist das Modul 'Schulfreien' unter dem Hersteller (Kern) zu finden.  
+   Anschließend ist noch das gewünschte Bundesland auszuwählen.  
 
 ## 4. Funktionsreferenz
 
@@ -47,10 +50,18 @@ SCHOOL_Update( integer $InstanceID );
 **GUID's:**  
  `{3B2628A3-AA47-431F-BF65-074C7002174B}`
 
-**Changelog:**  
- Version 1.0:
-  - Erstes Release
+**Changelog:** 
+ 
+ Version 1.01:  
+  - Update Doku
+
+ Version 1.0:  
+  - Erstes Release  
 
 **Danksagung:**  
  An kronos aus dem IPS-Forum für das Original-Script.  
 [IP-Symcon Forum: Schulferien](https://www.symcon.de/forum/threads/20398-Schulferien)
+
+## 6. Lizenz
+
+  [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)  
