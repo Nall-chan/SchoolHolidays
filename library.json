@@ -6,7 +6,7 @@
     "version": "1.01",
     "build": 101,
     "date": 1483891036,
-    "title": "Schulferien aus Deutschalnd in IPS",
+    "title": "Schulferien aus Deutschland in IPS",
     "description": "Dieses Modul zeigt an, ob es sich heute um einen Ferientag handelt..",
     "tags": ["Schule", "Ferien", "Deutschland"],
     "req_ips_version": "4.0"
