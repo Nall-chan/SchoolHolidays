@@ -18,7 +18,7 @@ Es handelt sich hier um eine Umsetzung von dem Schulferien-Script von kronos aus
 
 ## 1. Funktionsumfang
 
- Über die Webseite [http://www.schulferien.org](http://www.schulferien.org) wird ermittelt ob heute Schulferien sind.  
+ Über die Webseite [http://www.schulferien.eu](http://www.schulferien.eu) wird ermittelt ob heute Schulferien sind.  
  Entsprechend werden die beiden Statusvariablen mit Werten gefüllt.  
 
 ## 2. Voraussetzungen
@@ -51,6 +51,9 @@ SCHOOL_Update( integer $InstanceID );
  `{3B2628A3-AA47-431F-BF65-074C7002174B}`
 
 **Changelog:** 
+
+ Version 2.00:  
+  - Anbieterwechsel auf schulferien.eu (Einstellung Bundesland muss neu übernommen werden!)
  
  Version 1.01:  
   - Update Doku

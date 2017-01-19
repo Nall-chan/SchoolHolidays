@@ -8,73 +8,73 @@
                     "options": [
                         {
                             "label": "Baden-Württemberg",
-                            "value": "baden-wuerttemberg"
+                            "value": "2"
                         },
                         {
                             "label": "Bayern",
-                            "value": "Bayern"
+                            "value": "1"
                         },
                         {
                             "label": "Berlin",
-                            "value": "Berlin"
+                            "value": "4"
                         },
                         {
                             "label": "Brandenburg",
-                            "value": "Brandenburg"
+                            "value": "5"
                         },
                         {
                             "label": "Bremen",
-                            "value": "Bremen"
+                            "value": "6"
                         },
                         {
                             "label": "Hamburg",
-                            "value": "Hamburg"
+                            "value": "7"
                         },
                         {
                             "label": "Hessen",
-                            "value": "Hessen"
+                            "value": "8"
                         },
                         {
                             "label": "Mecklenburg-Vorpommern",
-                            "value": "mecklenburg-vorpommern"
+                            "value": "9"
                         },
                         {
                             "label": "Niedersachsen",
-                            "value": "Niedersachsen"
+                            "value": "3"
                         },
                         {
                             "label": "Nordrhein-Westfalen",
-                            "value": "nordrhein-westfalen"
+                            "value": "10"
                         },
                         {
                             "label": "Rheinland-Pfalz",
-                            "value": "rheinland-pfalz"
+                            "value": "11"
                         },
                         {
                             "label": "Saarland",
-                            "value": "Saarland"
+                            "value": "12"
                         },
                         {
                             "label": "Sachsen",
-                            "value": "Sachsen"
+                            "value": "13"
                         },
                         {
                             "label": "Sachsen-Anhalt",
-                            "value": "sachsen-anhalt"
+                            "value": "14"
                         },
                         {
                             "label": "Schleswig-Holstein",
-                            "value": "schleswig-holstein"
+                            "value": "15"
                         },
                         {
                             "label": "Thüringen",
-                            "value": "Thueringen"
+                            "value": "16"
                         }
                     ]
                 },
                 {
                     "type": "Label",
-                    "label": "Basis-URL von Schulferien.org"
+                    "label": "Basis-URL von Schulferien.eu"
                 },
                 {
                     "name": "BaseURL",

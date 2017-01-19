@@ -3,11 +3,11 @@
     "author": "kronos & Nall-chan",
     "name": "Schulferien",
     "url": "https://github.com/Nall-chan/IPSSchoolHolidays",
-    "version": "1.01",
-    "build": 101,
-    "date": 1483891036,
+    "version": "2.00",
+    "build": 202,
+    "date": 1484838864,
     "title": "Schulferien aus Deutschland in IPS",
-    "description": "Dieses Modul zeigt an, ob es sich heute um einen Ferientag handelt..",
+    "description": "Dieses Modul zeigt an, ob es sich heute um einen Ferientag handelt.",
     "tags": ["Schule", "Ferien", "Deutschland"],
     "req_ips_version": "4.0"
 }

@@ -7,9 +7,9 @@
  * @package       Schulferien
  * @file          module.php
  * @author        Michael Tröger <micha@nall-chan.net>
- * @copyright     2016 Michael Tröger
+ * @copyright     2017 Michael Tröger
  * @license       https://creativecommons.org/licenses/by-nc-sa/4.0/ CC BY-NC-SA 4.0
- * @version       1.01
+ * @version       2.00
  */
 
 /**
@@ -28,7 +28,8 @@ class Schulferien extends IPSModule
     {
         parent::Create();
         $this->RegisterPropertyString("Area", "baden-wuerttemberg");
-        $this->RegisterPropertyString("BaseURL", "http://www.schulferien.org/media/ical/deutschland/ferien_");
+        //$this->RegisterPropertyString("BaseURL", "http://www.schulferien.org/media/ical/deutschland/ferien_");
+        $this->RegisterPropertyString("BaseURL", "https://www.schulferien.eu/downloads/ical4.php");
     }
 
     /**
@@ -38,6 +39,13 @@ class Schulferien extends IPSModule
      */
     public function ApplyChanges()
     {
+        if (strpos($this->ReadPropertyString("BaseURL"), 'www.schulferien.org') !== false)
+        {
+            IPS_SetProperty($this->InstanceID, "BaseURL", "https://www.schulferien.eu/downloads/ical4.php");
+            if (IPS_HasChanges($this->InstanceID))
+                IPS_ApplyChanges($this->InstanceID);
+            return;
+        }
         parent::ApplyChanges();
 
         $this->RegisterVariableBoolean("IsSchoolHoliday", "Sind Ferien ?");
@@ -93,16 +101,21 @@ class Schulferien extends IPSModule
      */
     private function GetFeiertag()
     {
-        $jahr = date("Y") - 1;
-        $link = $this->ReadPropertyString("BaseURL") . strtolower($this->ReadPropertyString("Area")) . "_" . $jahr . ".ics";
-        $this->SendDebug('GET', $link, 0);
-        $meldung = @file($link);
-        if ($meldung === false)
-            throw new Exception("Cannot load iCal Data.", E_USER_NOTICE);
-        $this->SendDebug('LINES', count($meldung), 0);
-
+        if ((int)date("md") < 110)
+        {
+            $jahr = date("Y") - 1;
+            $link = $this->ReadPropertyString("BaseURL") . '?land=' . $this->ReadPropertyString("Area") . '&type=1&year=' . $jahr;
+            $this->SendDebug('GET', $link, 0);
+            $meldung = @file($link);
+            if ($meldung === false)
+                throw new Exception("Cannot load iCal Data.", E_USER_NOTICE);
+            $this->SendDebug('LINES', count($meldung), 0);
+        } else
+        {
+            $meldung = array();
+        }
         $jahr = date("Y");
-        $link = $this->ReadPropertyString("BaseURL") . strtolower($this->ReadPropertyString("Area")) . "_" . $jahr . ".ics";
+        $link = $this->ReadPropertyString("BaseURL") . '?land=' . $this->ReadPropertyString("Area") . '&type=1&year=' . $jahr;
         $this->SendDebug('GET', $link, 0);
         $meldung2 = @file($link);
         if ($meldung2 === false)
