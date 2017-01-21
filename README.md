@@ -52,6 +52,9 @@ SCHOOL_Update( integer $InstanceID );
 
 **Changelog:** 
 
+ Version 2.01:  
+  - Fix: Timer in Create verschoben
+ 
  Version 2.00:  
   - Anbieterwechsel auf schulferien.eu (Einstellung Bundesland muss neu übernommen werden!)
  

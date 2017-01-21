@@ -9,7 +9,7 @@
  * @author        Michael Tröger <micha@nall-chan.net>
  * @copyright     2017 Michael Tröger
  * @license       https://creativecommons.org/licenses/by-nc-sa/4.0/ CC BY-NC-SA 4.0
- * @version       2.00
+ * @version       2.01
  */
 
 /**
@@ -28,9 +28,8 @@ class Schulferien extends IPSModule
     {
         parent::Create();
         $this->RegisterPropertyString("Area", "baden-wuerttemberg");
-        //$this->RegisterPropertyString("BaseURL", "http://www.schulferien.org/media/ical/deutschland/ferien_");
         $this->RegisterPropertyString("BaseURL", "https://www.schulferien.eu/downloads/ical4.php");
-    }
+        $this->RegisterTimer("UpdateSchoolHolidays", 15 * 60 * 1000, 'SCHOOL_Update($_IPS[\'TARGET\']);');    }
 
     /**
      * Interne Funktion des SDK.
@@ -50,8 +49,6 @@ class Schulferien extends IPSModule
 
         $this->RegisterVariableBoolean("IsSchoolHoliday", "Sind Ferien ?");
         $this->RegisterVariableString("SchoolHoliday", "Ferien");
-        // 15 Minuten Timer
-        $this->RegisterTimer("UpdateSchoolHolidays", 15 * 60 * 1000, 'SCHOOL_Update($_IPS[\'TARGET\']);');
         // Nach übernahme der Einstellungen oder IPS-Neustart einmal Update durchführen.
         $this->Update();
     }
