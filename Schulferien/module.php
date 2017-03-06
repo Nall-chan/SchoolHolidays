@@ -27,7 +27,7 @@ class Schulferien extends IPSModule
     public function Create()
     {
         parent::Create();
-        $this->RegisterPropertyString("Area", "baden-wuerttemberg");
+        $this->RegisterPropertyString("Area", "2");
         $this->RegisterPropertyString("BaseURL", "https://www.schulferien.eu/downloads/ical4.php");
         $this->RegisterTimer("UpdateSchoolHolidays", 15 * 60 * 1000, 'SCHOOL_Update($_IPS[\'TARGET\']);');    }
 
