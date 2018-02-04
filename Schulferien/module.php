@@ -1,4 +1,4 @@
-<?
+<?php
 
 /**
  * @addtogroup schulferien
@@ -14,7 +14,7 @@
 
 /**
  * Schulferien ist die Klasse für das IPS-Modul 'Schulferien'.
- * Erweitert IPSModule 
+ * Erweitert IPSModule
  */
 class Schulferien extends IPSModule
 {
@@ -29,7 +29,8 @@ class Schulferien extends IPSModule
         parent::Create();
         $this->RegisterPropertyString("Area", "2");
         $this->RegisterPropertyString("BaseURL", "https://www.schulferien.eu/downloads/ical4.php");
-        $this->RegisterTimer("UpdateSchoolHolidays", 15 * 60 * 1000, 'SCHOOL_Update($_IPS[\'TARGET\']);');    }
+        $this->RegisterTimer("UpdateSchoolHolidays", 15 * 60 * 1000, 'SCHOOL_Update($_IPS[\'TARGET\']);');
+    }
 
     /**
      * Interne Funktion des SDK.
@@ -38,11 +39,11 @@ class Schulferien extends IPSModule
      */
     public function ApplyChanges()
     {
-        if (strpos($this->ReadPropertyString("BaseURL"), 'www.schulferien.org') !== false)
-        {
+        if (strpos($this->ReadPropertyString("BaseURL"), 'www.schulferien.org') !== false) {
             IPS_SetProperty($this->InstanceID, "BaseURL", "https://www.schulferien.eu/downloads/ical4.php");
-            if (IPS_HasChanges($this->InstanceID))
+            if (IPS_HasChanges($this->InstanceID)) {
                 IPS_ApplyChanges($this->InstanceID);
+            }
             return;
         }
         parent::ApplyChanges();
@@ -53,22 +54,19 @@ class Schulferien extends IPSModule
         $this->Update();
     }
 
-    ################## PUBLIC    
+    ################## PUBLIC
 
     /**
      * IPS-Instanz-Funktion 'SCHOOL_Update'.
      * Liest den Ferienkalender und befüllt die Variablen.
-     * 
+     *
      * @return boolean True bei erfolg, sonst false.
      */
     public function Update()
     {
-        try
-        {
+        try {
             $holiday = $this->GetFeiertag();
-        }
-        catch (Exception $exc)
-        {
+        } catch (Exception $exc) {
             trigger_error($exc->getMessage(), $exc->getCode());
             $this->SendDebug('ERROR', $exc->getMessage(), 0);
             return false;
@@ -76,12 +74,9 @@ class Schulferien extends IPSModule
 
 
         $this->SetValueString("SchoolHoliday", $holiday);
-        if ($holiday == "Keine Ferien")
-        {
+        if ($holiday == "Keine Ferien") {
             $this->SetValueBoolean("IsSchoolHoliday", false);
-        }
-        else
-        {
+        } else {
             $this->SetValueBoolean("IsSchoolHoliday", true);
         }
         return true;
@@ -98,25 +93,25 @@ class Schulferien extends IPSModule
      */
     private function GetFeiertag()
     {
-        if ((int)date("md") < 110)
-        {
+        if ((int)date("md") < 110) {
             $jahr = date("Y") - 1;
             $link = $this->ReadPropertyString("BaseURL") . '?land=' . $this->ReadPropertyString("Area") . '&type=1&year=' . $jahr;
             $this->SendDebug('GET', $link, 0);
             $meldung = @file($link);
-            if ($meldung === false)
+            if ($meldung === false) {
                 throw new Exception("Cannot load iCal Data.", E_USER_NOTICE);
+            }
             $this->SendDebug('LINES', count($meldung), 0);
-        } else
-        {
+        } else {
             $meldung = array();
         }
         $jahr = date("Y");
         $link = $this->ReadPropertyString("BaseURL") . '?land=' . $this->ReadPropertyString("Area") . '&type=1&year=' . $jahr;
         $this->SendDebug('GET', $link, 0);
         $meldung2 = @file($link);
-        if ($meldung2 === false)
+        if ($meldung2 === false) {
             throw new Exception("Cannot load iCal Data.", E_USER_NOTICE);
+        }
         $this->SendDebug('LINES', count($meldung2), 0);
 
         $meldung = array_merge($meldung, $meldung2);
@@ -124,10 +119,8 @@ class Schulferien extends IPSModule
 
         $anzahl = (count($meldung) - 1);
 
-        for ($count = 0; $count < $anzahl; $count++)
-        {
-            if (strstr($meldung[$count], "SUMMARY:"))
-            {
+        for ($count = 0; $count < $anzahl; $count++) {
+            if (strstr($meldung[$count], "SUMMARY:")) {
                 $name = trim(substr($meldung[$count], 8));
                 $start = trim(substr($meldung[$count + 1], 19));
                 $ende = trim(substr($meldung[$count + 2], 17));
@@ -135,8 +128,7 @@ class Schulferien extends IPSModule
                 $this->SendDebug('START', $start, 0);
                 $this->SendDebug('END', $ende, 0);
                 $jetzt = date("Ymd") . "\n";
-                if (($jetzt >= $start) and ( $jetzt <= $ende))
-                {
+                if (($jetzt >= $start) and ($jetzt <= $ende)) {
                     $ferien = explode(' ', $name)[0];
                     $this->SendDebug('FOUND', $ferien, 0);
                 }
@@ -147,7 +139,7 @@ class Schulferien extends IPSModule
 
     /**
      * Setzt eine Boolean-Variable
-     * 
+     *
      * @param string $Ident Der Ident der Boolean-Variable
      * @param bool $value Der neue Wert der Boolean-Variable
      */
@@ -159,7 +151,7 @@ class Schulferien extends IPSModule
 
     /**
      * Setzt eine String-Variable
-     * 
+     *
      * @param string $Ident Der Ident der String-Variable
      * @param string $value Der neue Wert der String-Variable
      */
@@ -168,7 +160,6 @@ class Schulferien extends IPSModule
         $id = $this->GetIDForIdent($Ident);
         SetValueString($id, $value);
     }
-
 }
 
 /** @} */
