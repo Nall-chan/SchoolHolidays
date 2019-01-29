@@ -1,42 +1,39 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /**
  * @addtogroup schulferien
  * @{
  *
- * @package       Schulferien
  * @file          module.php
+ *
  * @author        Michael Tröger <micha@nall-chan.net>
  * @copyright     2019 Michael Tröger
  * @license       https://creativecommons.org/licenses/by-nc-sa/4.0/ CC BY-NC-SA 4.0
+ *
  * @version       3.0
  */
 
 /**
  * Schulferien ist die Klasse für das IPS-Modul 'Schulferien'.
- * Erweitert IPSModule
+ * Erweitert IPSModule.
  */
 class Schulferien extends IPSModule
 {
     /**
      * Interne Funktion des SDK.
-     *
-     * @access public
      */
     public function Create()
     {
         parent::Create();
-        $this->RegisterPropertyString('Area', "2"); // Old Version was string... so never change it to integer!!
+        $this->RegisterPropertyString('Area', '2'); // Old Version was string... so never change it to integer!!
         $this->RegisterPropertyString('BaseURL', 'https://www.schulferien.eu/downloads/ical4.php');
         $this->RegisterTimer('UpdateSchoolHolidays', 15 * 60 * 1000, 'SCHOOL_Update($_IPS[\'TARGET\']);');
     }
 
     /**
      * Interne Funktion des SDK.
-     *
-     * @access public
      */
     public function ApplyChanges()
     {
@@ -55,12 +52,13 @@ class Schulferien extends IPSModule
         $this->Update();
     }
 
-    ################## PUBLIC
+    //################# PUBLIC
+
     /**
      * IPS-Instanz-Funktion 'SCHOOL_Update'.
      * Liest den Ferienkalender und befüllt die Variablen.
      *
-     * @return boolean True bei erfolg, sonst false.
+     * @return bool True bei erfolg, sonst false.
      */
     public function Update()
     {
@@ -72,25 +70,25 @@ class Schulferien extends IPSModule
             return false;
         }
 
-
         $this->SetValue('SchoolHoliday', $holiday);
         $this->SetValue('IsSchoolHoliday', (!$holiday == 'Keine Ferien'));
         return true;
     }
 
-    ################## private
+    //################# private
+
     /**
      * Holt den aktuellen Kalender von http://www.schulferien.org und wertet Diesen aus.
      *
-     * @access private
-     * @return string Liefert den Namen der aktuellen Ferien oder 'Keine Ferien'.
      * @throws Exception Wenn Kalender nicht geladen werden konnte.
+     *
+     * @return string Liefert den Namen der aktuellen Ferien oder 'Keine Ferien'.
      */
     private function GetFeiertag()
     {
-        if ((int) date("md") < 110) {
-            $jahr = date("Y") - 1;
-            $link = $this->ReadPropertyString('BaseURL') . '?land=' . $this->ReadPropertyString("Area") . '&type=1&year=' . $jahr;
+        if ((int) date('md') < 110) {
+            $jahr = date('Y') - 1;
+            $link = $this->ReadPropertyString('BaseURL') . '?land=' . $this->ReadPropertyString('Area') . '&type=1&year=' . $jahr;
             $this->SendDebug('GET', $link, 0);
             $meldung = @file($link);
             if ($meldung === false) {
@@ -98,10 +96,10 @@ class Schulferien extends IPSModule
             }
             $this->SendDebug('LINES', count($meldung), 0);
         } else {
-            $meldung = array();
+            $meldung = [];
         }
-        $jahr = date("Y");
-        $link = $this->ReadPropertyString('BaseURL') . '?land=' . $this->ReadPropertyString("Area") . '&type=1&year=' . $jahr;
+        $jahr = date('Y');
+        $link = $this->ReadPropertyString('BaseURL') . '?land=' . $this->ReadPropertyString('Area') . '&type=1&year=' . $jahr;
         $this->SendDebug('GET', $link, 0);
         $meldung2 = @file($link);
         if ($meldung2 === false) {
@@ -110,7 +108,7 @@ class Schulferien extends IPSModule
         $this->SendDebug('LINES', count($meldung2), 0);
 
         $meldung = array_merge($meldung, $meldung2);
-        $ferien = "Keine Ferien";
+        $ferien = 'Keine Ferien';
 
         $anzahl = (count($meldung) - 1);
 
@@ -122,8 +120,8 @@ class Schulferien extends IPSModule
                 $this->SendDebug('SUMMARY', $name, 0);
                 $this->SendDebug('START', $start, 0);
                 $this->SendDebug('END', $ende, 0);
-                $jetzt = date("Ymd") . "\n";
-                if (($jetzt >= $start) and ( $jetzt <= $ende)) {
+                $jetzt = date('Ymd') . "\n";
+                if (($jetzt >= $start) and ($jetzt <= $ende)) {
                     $ferien = explode(' ', $name)[0];
                     $this->SendDebug('FOUND', $ferien, 0);
                 }
@@ -131,7 +129,6 @@ class Schulferien extends IPSModule
         }
         return $ferien;
     }
-
 }
 
-/** @} */
+/* @} */
