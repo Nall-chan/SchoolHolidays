@@ -1,7 +1,7 @@
 [![Version](https://img.shields.io/badge/Symcon-PHPModul-red.svg)](https://www.symcon.de/service/dokumentation/entwicklerbereich/sdk-tools/sdk-php/)
-[![Version](https://img.shields.io/badge/Modul%20Version-1.01-blue.svg)]()
+[![Version](https://img.shields.io/badge/Modul%20Version-3.0-blue.svg)]()
 [![Version](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-green.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)  
-![Version](https://img.shields.io/badge/Symcon%20Version-4.0%20%3E-green.svg)
+[![Version](https://img.shields.io/badge/Symcon%20Version-5.0%20%3E-green.svg)](https://www.symcon.de/forum/threads/30857-IP-Symcon-5-0-%28Stable%29-Changelog)
 [![StyleCI](https://styleci.io/repos/41354661/shield?style=flat)](https://styleci.io/repos/41354661)  
 
 # Schulferien
@@ -29,7 +29,7 @@ Es handelt sich hier um eine Umsetzung von dem Schulferien-Script von kronos aus
 
 ## 2. Voraussetzungen
 
- - IPS 4.x
+ - IPS 5.0 >
  
 ## 3. Installation
 
@@ -37,11 +37,11 @@ Es handelt sich hier um eine Umsetzung von dem Schulferien-Script von kronos aus
    Kein Modul, aber das Original-Script aus dem Forum kann genutzt werden.
     [IP-Symcon Forum: Schulferien](https://www.symcon.de/forum/threads/20398-Schulferien)
 
-### IPS 4.x  
+### ab IPS 5.0  
    Über das 'Modul Control' folgende URL hinzufügen:  
     `git://github.com/Nall-chan/IPSSchoolHolidays.git`  
 
-   Unter Instanz hinzufügen ist das Modul 'Schulfreien' unter dem Hersteller (Kern) zu finden.  
+   Unter Instanz hinzufügen ist das Modul 'Schulferien' unter dem Hersteller (Kern) zu finden.  
    Anschließend ist noch das gewünschte Bundesland auszuwählen.  
 
 ## 4. Funktionsreferenz
@@ -57,6 +57,9 @@ SCHOOL_Update( integer $InstanceID );
  `{3B2628A3-AA47-431F-BF65-074C7002174B}`
 
 **Changelog:** 
+
+Version 3.0:  
+  - Update für IPS 5  
 
  Version 2.01:  
   - Fix: Timer in Create verschoben
