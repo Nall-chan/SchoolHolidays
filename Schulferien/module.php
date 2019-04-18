@@ -71,7 +71,7 @@ class Schulferien extends IPSModule
         }
 
         $this->SetValue('SchoolHoliday', $holiday);
-        $this->SetValue('IsSchoolHoliday', (!$holiday == 'Keine Ferien'));
+        $this->SetValue('IsSchoolHoliday', !($holiday == 'Keine Ferien'));
         return true;
     }
 

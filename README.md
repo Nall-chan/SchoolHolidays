@@ -1,5 +1,5 @@
 [![Version](https://img.shields.io/badge/Symcon-PHPModul-red.svg)](https://www.symcon.de/service/dokumentation/entwicklerbereich/sdk-tools/sdk-php/)
-[![Version](https://img.shields.io/badge/Modul%20Version-3.0-blue.svg)]()
+[![Version](https://img.shields.io/badge/Modul%20Version-3.01-blue.svg)]()
 [![Version](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-green.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)  
 [![Version](https://img.shields.io/badge/Symcon%20Version-5.0%20%3E-green.svg)](https://www.symcon.de/forum/threads/30857-IP-Symcon-5-0-%28Stable%29-Changelog)
 [![StyleCI](https://styleci.io/repos/41354661/shield?style=flat)](https://styleci.io/repos/41354661)  
@@ -57,6 +57,9 @@ SCHOOL_Update( integer $InstanceID );
  `{3B2628A3-AA47-431F-BF65-074C7002174B}`
 
 **Changelog:** 
+
+Version 3.01:  
+  - BugFix für die 'Sind Ferien ?' Variable.
 
 Version 3.0:  
   - Update für IPS 5  
