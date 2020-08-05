@@ -3,12 +3,12 @@
     "name": "Schulferien",
     "type": 0,
     "vendor": "",
-    "aliases": 
-    [
+    "aliases": [
         "Schulferien"
     ],
     "parentRequirements": [],
     "childRequirements": [],
     "implemented": [],
-    "prefix": "SCHOOL"
+    "prefix": "SCHOOL",
+    "url": "https://github.com/Nall-chan/SchoolHolidays"
 }

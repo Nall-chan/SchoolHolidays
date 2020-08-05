@@ -1,8 +1,8 @@
 [![Version](https://img.shields.io/badge/Symcon-PHPModul-red.svg)](https://www.symcon.de/service/dokumentation/entwicklerbereich/sdk-tools/sdk-php/)
 [![Version](https://img.shields.io/badge/Modul%20Version-3.01-blue.svg)]()
-[![Version](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-green.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)  
-[![Version](https://img.shields.io/badge/Symcon%20Version-5.0%20%3E-green.svg)](https://www.symcon.de/forum/threads/30857-IP-Symcon-5-0-%28Stable%29-Changelog)
-[![StyleCI](https://styleci.io/repos/41354661/shield?style=flat)](https://styleci.io/repos/41354661)  
+[![Version](https://img.shields.io/badge/Symcon%20Version-5.1%20%3E-green.svg)](https://www.symcon.de/service/dokumentation/installation/migrationen/v50-v51-q2-2019/)  
+[![License](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-green.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+[![Check Style](https://github.com/Nall-chan/SchoolHolidays/workflows/Check%20Style/badge.svg)](https://github.com/Nall-chan/SchoolHolidays/actions) [![Run Tests](https://github.com/Nall-chan/SchoolHolidays/workflows/Run%20Tests/badge.svg)](https://github.com/Nall-chan/SchoolHolidays/actions)  
 
 # Schulferien
 
@@ -11,17 +11,16 @@ Im Konfigurationsformular muss das Bundesland ausgewählt werden.
 Es handelt sich hier um eine Umsetzung von dem Schulferien-Script von kronos aus dem IP-Symcon-Forum.  
 [IP-Symcon Forum: Schulferien](https://www.symcon.de/forum/threads/20398-Schulferien)  
 
-## Dokumentation
+## Dokumentation <!-- omit in toc -->
 
 **Inhaltsverzeichnis**
 
-1. [Funktionsumfang](#1-funktionsumfang) 
-2. [Voraussetzungen](#2-voraussetzungen)
-3. [Installation](#3-installation)
-4. [Funktionsreferenz](#4-funktionsreferenz) 
-5. [Anhang](#5-anhang)
-6. [Lizenz](#6-lizenz)
-
+- [1. Funktionsumfang](#1-funktionsumfang)
+- [2. Voraussetzungen](#2-voraussetzungen)
+- [3. Installation](#3-installation)
+- [4. Funktionsreferenz](#4-funktionsreferenz)
+- [5. Anhang](#5-anhang)
+- [6. Lizenz](#6-lizenz)
 ## 1. Funktionsumfang
 
  Über die Webseite [http://www.schulferien.eu](http://www.schulferien.eu) wird ermittelt ob heute Schulferien sind.  
@@ -29,17 +28,11 @@ Es handelt sich hier um eine Umsetzung von dem Schulferien-Script von kronos aus
 
 ## 2. Voraussetzungen
 
- - IPS 5.0 >
+ - IPS 5.1 >
  
 ## 3. Installation
 
-### IPS 3.x  
-   Kein Modul, aber das Original-Script aus dem Forum kann genutzt werden.
-    [IP-Symcon Forum: Schulferien](https://www.symcon.de/forum/threads/20398-Schulferien)
-
-### ab IPS 5.0  
-   Über das 'Modul Control' folgende URL hinzufügen:  
-    `git://github.com/Nall-chan/IPSSchoolHolidays.git`  
+   Über den 'Module-Store' in IPS das Modul `Schulferien` hinzufügen.  
 
    Unter Instanz hinzufügen ist das Modul 'Schulferien' unter dem Hersteller (Kern) zu finden.  
    Anschließend ist noch das gewünschte Bundesland auszuwählen.  
@@ -53,7 +46,7 @@ SCHOOL_Update( integer $InstanceID );
 
 ## 5. Anhang
 
-**GUID's:**  
+**GUID:**  
  `{3B2628A3-AA47-431F-BF65-074C7002174B}`
 
 **Changelog:** 

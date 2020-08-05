@@ -1,93 +1,91 @@
 {
-    "elements":
-            [
+    "elements": [
+        {
+            "name": "Area",
+            "type": "Select",
+            "caption": "Bundesland",
+            "options": [
                 {
-                    "name": "Area",
-                    "type": "Select",
-                    "caption": "Bundesland",
-                    "options": [
-                        {
-                            "label": "Baden-Württemberg",
-                            "value": "2"
-                        },
-                        {
-                            "label": "Bayern",
-                            "value": "1"
-                        },
-                        {
-                            "label": "Berlin",
-                            "value": "4"
-                        },
-                        {
-                            "label": "Brandenburg",
-                            "value": "5"
-                        },
-                        {
-                            "label": "Bremen",
-                            "value": "6"
-                        },
-                        {
-                            "label": "Hamburg",
-                            "value": "7"
-                        },
-                        {
-                            "label": "Hessen",
-                            "value": "8"
-                        },
-                        {
-                            "label": "Mecklenburg-Vorpommern",
-                            "value": "9"
-                        },
-                        {
-                            "label": "Niedersachsen",
-                            "value": "3"
-                        },
-                        {
-                            "label": "Nordrhein-Westfalen",
-                            "value": "10"
-                        },
-                        {
-                            "label": "Rheinland-Pfalz",
-                            "value": "11"
-                        },
-                        {
-                            "label": "Saarland",
-                            "value": "12"
-                        },
-                        {
-                            "label": "Sachsen",
-                            "value": "13"
-                        },
-                        {
-                            "label": "Sachsen-Anhalt",
-                            "value": "14"
-                        },
-                        {
-                            "label": "Schleswig-Holstein",
-                            "value": "15"
-                        },
-                        {
-                            "label": "Thüringen",
-                            "value": "16"
-                        }
-                    ]
+                    "label": "Baden-Württemberg",
+                    "value": "2"
                 },
                 {
-                    "type": "Label",
-                    "label": "Basis-URL von Schulferien.eu"
+                    "label": "Bayern",
+                    "value": "1"
                 },
                 {
-                    "name": "BaseURL",
-                    "type": "ValidationTextBox",
-                    "caption": "URL"
-                }
-            ],
-    "actions":
-            [
+                    "label": "Berlin",
+                    "value": "4"
+                },
                 {
-                    "type": "Button",
-                    "label": "Update",
-                    "onClick": "SCHOOL_Update($id);"
+                    "label": "Brandenburg",
+                    "value": "5"
+                },
+                {
+                    "label": "Bremen",
+                    "value": "6"
+                },
+                {
+                    "label": "Hamburg",
+                    "value": "7"
+                },
+                {
+                    "label": "Hessen",
+                    "value": "8"
+                },
+                {
+                    "label": "Mecklenburg-Vorpommern",
+                    "value": "9"
+                },
+                {
+                    "label": "Niedersachsen",
+                    "value": "3"
+                },
+                {
+                    "label": "Nordrhein-Westfalen",
+                    "value": "10"
+                },
+                {
+                    "label": "Rheinland-Pfalz",
+                    "value": "11"
+                },
+                {
+                    "label": "Saarland",
+                    "value": "12"
+                },
+                {
+                    "label": "Sachsen",
+                    "value": "13"
+                },
+                {
+                    "label": "Sachsen-Anhalt",
+                    "value": "14"
+                },
+                {
+                    "label": "Schleswig-Holstein",
+                    "value": "15"
+                },
+                {
+                    "label": "Thüringen",
+                    "value": "16"
                 }
             ]
+        },
+        {
+            "type": "Label",
+            "label": "Basis-URL von Schulferien.eu"
+        },
+        {
+            "name": "BaseURL",
+            "type": "ValidationTextBox",
+            "caption": "URL"
+        }
+    ],
+    "actions": [
+        {
+            "type": "Button",
+            "label": "Update",
+            "onClick": "SCHOOL_Update($id);"
+        }
+    ]
 }
