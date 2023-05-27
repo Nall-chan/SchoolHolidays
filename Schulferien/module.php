@@ -12,19 +12,19 @@ declare(strict_types=1);
  * @copyright     2020 Michael Tröger
  * @license       https://creativecommons.org/licenses/by-nc-sa/4.0/ CC BY-NC-SA 4.0
  *
- * @version       3.01
+ * @version       3.02
  */
 
 /**
  * Schulferien ist die Klasse für das IPS-Modul 'Schulferien'.
  * Erweitert IPSModule.
  */
-class Schulferien extends IPSModule
+class Schulferien extends IPSModuleStrict
 {
     /**
      * Interne Funktion des SDK.
      */
-    public function Create()
+    public function Create(): void
     {
         parent::Create();
         $this->RegisterPropertyString('Area', '2'); // Old Version was string... so never change it to integer!!
@@ -35,7 +35,7 @@ class Schulferien extends IPSModule
     /**
      * Interne Funktion des SDK.
      */
-    public function ApplyChanges()
+    public function ApplyChanges(): void
     {
         /* Update old Version */
         if (strpos($this->ReadPropertyString('BaseURL'), 'www.schulferien.org') !== false) {
@@ -60,7 +60,7 @@ class Schulferien extends IPSModule
      *
      * @return bool True bei erfolg, sonst false.
      */
-    public function Update()
+    public function Update(): bool
     {
         try {
             $holiday = $this->GetFeiertag();
@@ -84,7 +84,7 @@ class Schulferien extends IPSModule
      *
      * @return string Liefert den Namen der aktuellen Ferien oder 'Keine Ferien'.
      */
-    private function GetFeiertag()
+    private function GetFeiertag(): string
     {
         if ((int) date('md') < 110) {
             $jahr = date('Y') - 1;
