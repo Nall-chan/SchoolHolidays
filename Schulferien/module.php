@@ -94,7 +94,7 @@ class Schulferien extends IPSModule
             if ($meldung === false) {
                 throw new Exception('Cannot load iCal Data.', E_USER_NOTICE);
             }
-            $this->SendDebug('LINES', count($meldung), 0);
+            $this->SendDebug('LINES', (string) count($meldung), 0);
         } else {
             $meldung = [];
         }
@@ -105,7 +105,7 @@ class Schulferien extends IPSModule
         if ($meldung2 === false) {
             throw new Exception('Error load iCal Data.', E_USER_NOTICE);
         }
-        $this->SendDebug('LINES', count($meldung2), 0);
+        $this->SendDebug('LINES', (string) count($meldung2), 0);
 
         $meldung = array_merge($meldung, $meldung2);
         $ferien = 'Keine Ferien';
@@ -121,7 +121,7 @@ class Schulferien extends IPSModule
                 $this->SendDebug('START', $start, 0);
                 $this->SendDebug('END', $ende, 0);
                 $jetzt = date('Ymd') . "\n";
-                if (($jetzt >= $start) and ($jetzt <= $ende)) {
+                if (($jetzt >= $start) && ($jetzt <= $ende)) {
                     $ferien = explode(' ', $name)[0];
                     $this->SendDebug('FOUND', $ferien, 0);
                 }
