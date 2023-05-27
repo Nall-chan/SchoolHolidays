@@ -1,6 +1,6 @@
 [![SDK](https://img.shields.io/badge/Symcon-PHPModul-red.svg)](https://www.symcon.de/service/dokumentation/entwicklerbereich/sdk-tools/sdk-php/)
 [![Version](https://img.shields.io/badge/Modul%20Version-3.02-blue.svg)]()
-[Version](https://img.shields.io/badge/Symcon%20Version-7.0%20%3E-green.svg)  
+![Version](https://img.shields.io/badge/Symcon%20Version-7.0%20%3E-green.svg)  
 [![License](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-green.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 [![Check Style](https://github.com/Nall-chan/SchoolHolidays/workflows/Check%20Style/badge.svg)](https://github.com/Nall-chan/SchoolHolidays/actions) [![Run Tests](https://github.com/Nall-chan/SchoolHolidays/workflows/Run%20Tests/badge.svg)](https://github.com/Nall-chan/SchoolHolidays/actions)  
 [![Spenden](https://www.paypalobjects.com/de_DE/DE/i/btn/btn_donate_SM.gif)](#6-spenden)  
