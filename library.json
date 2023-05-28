@@ -4,9 +4,9 @@
     "name": "Schulferien",
     "url": "https://github.com/Nall-chan/SchoolHolidays",
     "version": "3.02",
-    "build": 200,
-    "date": 1596607210,
+    "build": 302,
+    "date": 1685192114,
     "compatibility": {
-        "version": "5.1"
+        "version": "7.0"
     }
 }
