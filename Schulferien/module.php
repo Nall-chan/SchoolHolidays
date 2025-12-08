@@ -9,7 +9,7 @@ declare(strict_types=1);
  * @file          module.php
  *
  * @author        Michael Tröger <micha@nall-chan.net>
- * @copyright     2020 Michael Tröger
+ * @copyright     2025 Michael Tröger
  * @license       https://creativecommons.org/licenses/by-nc-sa/4.0/ CC BY-NC-SA 4.0
  *
  * @version       3.02
@@ -27,9 +27,23 @@ class Schulferien extends IPSModuleStrict
     public function Create(): void
     {
         parent::Create();
-        $this->RegisterPropertyString('Area', '2'); // Old Version was string... so never change it to integer!!
+        $this->RegisterPropertyInteger('Region', 2);
         $this->RegisterPropertyString('BaseURL', 'https://www.schulferien.eu/downloads/ical4.php');
         $this->RegisterTimer('UpdateSchoolHolidays', 15 * 60 * 1000, 'SCHOOL_Update($_IPS[\'TARGET\']);');
+    }
+
+    public function Migrate(string $JSONData): string
+    {
+        $j = json_decode($JSONData);
+        if (isset($j->configuration->Area)) {
+            $j->configuration->Region = $j->configuration->Area;
+            unset($j->configuration->Area);
+            /* Update old URL */
+            if (strpos($this->ReadPropertyString('BaseURL'), 'www.schulferien.org') !== false) {
+                $j->configuration->BaseURL = 'https://www.schulferien.eu/downloads/ical4.php';
+            }
+        }
+        return json_encode($j);
     }
 
     /**
@@ -37,28 +51,47 @@ class Schulferien extends IPSModuleStrict
      */
     public function ApplyChanges(): void
     {
-        /* Update old Version */
-        if (strpos($this->ReadPropertyString('BaseURL'), 'www.schulferien.org') !== false) {
-            IPS_SetProperty($this->InstanceID, 'BaseURL', 'https://www.schulferien.eu/downloads/ical4.php');
-            if (IPS_HasChanges($this->InstanceID)) {
-                IPS_ApplyChanges($this->InstanceID);
-            }
-            return;
-        }
         parent::ApplyChanges();
-
-        $this->RegisterVariableBoolean('IsSchoolHoliday', 'Sind Ferien ?');
-        $this->RegisterVariableString('SchoolHoliday', 'Ferien');
+        $this->RegisterVariableBoolean(
+            'IsSchoolHoliday',
+            'Sind Ferien ?',
+            [
+                'PRESENTATION' => VARIABLE_PRESENTATION_VALUE_PRESENTATION,
+                'OPTIONS'      => json_encode([
+                    [
+                        'Caption'    => 'Ja',
+                        'Value'      => true,
+                        'IconActive' => false,
+                        'IconValue'  => '',
+                        'ColorActive'=> false,
+                        'ColorValue' => ''
+                    ],
+                    [
+                        'Caption'    => 'Nein',
+                        'Value'      => false,
+                        'IconActive' => false,
+                        'IconValue'  => '',
+                        'ColorActive'=> false,
+                        'ColorValue' => ''
+                    ]
+                ])
+            ]
+        );
+        $this->RegisterVariableString(
+            'SchoolHoliday',
+            'Ferien',
+            [
+                'PRESENTATION' => VARIABLE_PRESENTATION_VALUE_PRESENTATION
+            ]
+        );
         $this->Update();
     }
-
-    //################# PUBLIC
 
     /**
      * IPS-Instanz-Funktion 'SCHOOL_Update'.
      * Liest den Ferienkalender und befüllt die Variablen.
      *
-     * @return bool True bei erfolg, sonst false.
+     * @return bool True bei Erfolg, sonst false.
      */
     public function Update(): bool
     {
@@ -75,8 +108,6 @@ class Schulferien extends IPSModuleStrict
         return true;
     }
 
-    //################# private
-
     /**
      * Holt den aktuellen Kalender von http://www.schulferien.org und wertet Diesen aus.
      *
@@ -86,48 +117,42 @@ class Schulferien extends IPSModuleStrict
      */
     private function GetFeiertag(): string
     {
+        $LastYear = [];
         if ((int) date('md') < 110) {
-            $jahr = date('Y') - 1;
-            $link = $this->ReadPropertyString('BaseURL') . '?land=' . $this->ReadPropertyString('Area') . '&type=1&year=' . $jahr;
-            $this->SendDebug('GET', $link, 0);
-            $meldung = @file($link);
-            if ($meldung === false) {
+            $Link = $this->ReadPropertyString('BaseURL') . '?land=' . $this->ReadPropertyInteger('Region') . '&type=1&year=' . ((int) date('Y') - 1);
+            $this->SendDebug('GET', $Link, 0);
+            $LastYear = @file($Link);
+            if ($LastYear === false) {
                 throw new Exception('Cannot load iCal Data.', E_USER_NOTICE);
             }
-            $this->SendDebug('LINES', (string) count($meldung), 0);
-        } else {
-            $meldung = [];
+            $this->SendDebug('LINES', (string) count($LastYear), 0);
         }
-        $jahr = date('Y');
-        $link = $this->ReadPropertyString('BaseURL') . '?land=' . $this->ReadPropertyString('Area') . '&type=1&year=' . $jahr;
-        $this->SendDebug('GET', $link, 0);
-        $meldung2 = @file($link);
-        if ($meldung2 === false) {
+        $Link = $this->ReadPropertyString('BaseURL') . '?land=' . $this->ReadPropertyInteger('Region') . '&type=1&year=' . date('Y');
+        $this->SendDebug('GET', $Link, 0);
+        $ThisYear = @file($Link);
+        if ($ThisYear === false) {
             throw new Exception('Error load iCal Data.', E_USER_NOTICE);
         }
-        $this->SendDebug('LINES', (string) count($meldung2), 0);
-
-        $meldung = array_merge($meldung, $meldung2);
-        $ferien = 'Keine Ferien';
-
-        $anzahl = (count($meldung) - 1);
-
-        for ($count = 0; $count < $anzahl; $count++) {
-            if (strstr($meldung[$count], 'SUMMARY:')) {
-                $name = trim(substr($meldung[$count], 8));
-                $start = trim(substr($meldung[$count + 1], 19));
-                $ende = trim(substr($meldung[$count + 2], 17));
-                $this->SendDebug('SUMMARY', $name, 0);
-                $this->SendDebug('START', $start, 0);
-                $this->SendDebug('END', $ende, 0);
-                $jetzt = date('Ymd') . "\n";
-                if (($jetzt >= $start) && ($jetzt <= $ende)) {
-                    $ferien = explode(' ', $name)[0];
-                    $this->SendDebug('FOUND', $ferien, 0);
+        $this->SendDebug('LINES', (string) count($ThisYear), 0);
+        $LastYear = array_merge($LastYear, $ThisYear);
+        $FerienText = 'Keine Ferien';
+        $NoOfLines = (count($LastYear) - 1);
+        $Now = date('Ymd') . "\n";
+        for ($Line = 0; $Line < $NoOfLines; $Line++) {
+            if (strstr($LastYear[$Line], 'SUMMARY:')) {
+                $FerienName = trim(substr($LastYear[$Line], 8));
+                $FerienStart = trim(substr($LastYear[$Line + 1], 19));
+                $FerienEnde = trim(substr($LastYear[$Line + 2], 17));
+                $this->SendDebug('SUMMARY', $FerienName, 0);
+                $this->SendDebug('START', $FerienStart, 0);
+                $this->SendDebug('END', $FerienEnde, 0);
+                if (($Now >= $FerienStart) && ($Now <= $FerienEnde)) {
+                    $FerienText = trim(substr(strstr($LastYear[$Line], 'SUMMARY:'), 8));
+                    $this->SendDebug('FOUND', $FerienText, 0);
                 }
             }
         }
-        return $ferien;
+        return $FerienText;
     }
 }
 
