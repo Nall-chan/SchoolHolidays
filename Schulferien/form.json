@@ -69,16 +69,18 @@
                     "label": "Thüringen",
                     "value": 16
                 }
-            ]
+            ],
+            "width": "400px"
         },
         {
             "type": "Label",
-            "label": "Basis-URL von Schulferien.eu"
+            "label": "Basis-URL von Schulferien.eu :"
         },
         {
             "name": "BaseURL",
             "type": "ValidationTextBox",
-            "caption": "URL"
+            "caption": "URL",
+            "width": "400px"
         }
     ],
     "actions": [
