@@ -56,24 +56,43 @@ class Schulferien extends IPSModuleStrict
             'IsSchoolHoliday',
             'Sind Ferien ?',
             [
-                'PRESENTATION' => VARIABLE_PRESENTATION_VALUE_PRESENTATION,
-                'OPTIONS'      => json_encode([
+                'PRESENTATION'  => VARIABLE_PRESENTATION_VALUE_PRESENTATION,
+                'COLOR'         => -1,
+                'ICON'          => '',
+                'CONTENT_COLOR' => -1,
+                'DISPLAY_TYPE'  => 0,
+                'PREVIEW_STYLE' => 1,
+                'SHOW_PREVIEW'  => true,
+                'OPTIONS'       => json_encode([
                     [
-                        'Caption'    => 'Ja',
-                        'Value'      => true,
-                        'IconActive' => false,
-                        'IconValue'  => '',
-                        'ColorActive'=> false,
-                        'ColorValue' => ''
+                        'ColorDisplay'        => -1,
+                        'ContentColorDisplay' => -1,
+                        'Value'               => false,
+                        'Caption'             => 'Nein',
+                        'IconActive'          => false,
+                        'IconValue'           => '',
+                        'ColorActive'         => false,
+                        'ColorValue'          => -1,
+                        'ContentColorActive'  => false,
+                        'ContentColorValue'   => -1,
+                        'Color'               => -1,
+                        'ContentColor'        => -1
                     ],
                     [
-                        'Caption'    => 'Nein',
-                        'Value'      => false,
-                        'IconActive' => false,
-                        'IconValue'  => '',
-                        'ColorActive'=> false,
-                        'ColorValue' => ''
+                        'ColorDisplay'        => -1,
+                        'ContentColorDisplay' => -1,
+                        'Value'               => true,
+                        'Caption'             => 'Ja',
+                        'IconActive'          => false,
+                        'IconValue'           => '',
+                        'ColorActive'         => false,
+                        'ColorValue'          => -1,
+                        'ContentColorActive'  => false,
+                        'ContentColorValue'   => -1,
+                        'Color'               => -1,
+                        'ContentColor'        => -1
                     ]
+
                 ])
             ]
         );
